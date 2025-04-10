@@ -98,8 +98,120 @@ class Query
         }
     }
 
-    public function querry4() {}
+    // task 4 or querry 4 
+    public function querry4()
+    {
+        // if fourth button is pressed 
+        if (isset($_POST["fourthquerry"])) {
+            //   sql querry 
+            $sql = "SELECT CONCAT(a.employee_first_name, ' ', a.employee_last_name) AS fullname
+                    FROM employee_details_table AS a
+                    INNER JOIN employee_salary_table AS b ON a.employee_id = b.employee_id
+                    INNER JOIN employee_code_table AS c ON c.employee_code = b.employee_code
+                    WHERE c.employee_domain != 'java'";
+            // extracting results 
+            $result = $this->conn->query($sql);
+            // if table is not empty 
+            if ($result && $result->num_rows > 0) {
+                $this->result = "<ul>";
+                // extracting and storing result into variable named row 
+                while ($row = $result->fetch_assoc()) {
+                    $this->result .= "<li>" . htmlspecialchars($row["fullname"]) . "</li>";
+                }
+                $this->result .= "</ul>";
+            } else {
+                // if there is error show error 
+                $this->result = "No employees found outside the Java domain.";
+            }
+        }
+    }
+    public function querry5()
+    {
+        if (isset($_POST["fifthquerry"])) {
+            $sql = "SELECT b.employee_domain, SUM(a.employee_salary) AS domain_salary 
+                    FROM employee_salary_table AS a 
+                    INNER JOIN employee_code_table AS b 
+                    ON a.employee_code = b.employee_code 
+                    GROUP BY b.employee_domain";
+
+            $result = $this->conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                $this->result = "<ul>";
+                while ($row = $result->fetch_assoc()) {
+                    $this->result .= "<li>" .
+                        htmlspecialchars($row["employee_domain"]) .
+                        "=" .
+                        htmlentities($row["domain_salary"]) .
+                        "k" .
+                        "</li>";
+                }
+                $this->result .= "</ul>";
+            } else {
+                $this->result = "No salary data found for domains.";
+            }
+        }
+    }
+    public function querry6()
+    {
+        if (isset($_POST["sixthquerry"])) {
+            $sql = "SELECT b.employee_domain, 
+                           SUM(a.employee_salary) AS domain_salary 
+                    FROM employee_salary_table AS a 
+                    INNER JOIN employee_code_table AS b 
+                    ON a.employee_code = b.employee_code 
+                    WHERE a.employee_salary > 30
+                    GROUP BY b.employee_domain";
+
+            $result = $this->conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                $this->result = "<ul>";
+                while ($row = $result->fetch_assoc()) {
+                    $this->result .= "<li>" .
+                        htmlspecialchars($row["employee_domain"]) .
+                        " = ₹" .
+                        htmlentities($row["domain_salary"]) .
+                        "</li>";
+                }
+                $this->result .= "</ul>";
+            } else {
+                $this->result = "No domain has salaries over ₹30,000.";
+            }
+        }
+    }
+    public function query7()
+    {
+        // SQL query
+        $sql = "SELECT employee_id from employee_salary_table where employee_code IS NULL";
+
+        // Execute the query
+        $result = $this->conn->query($sql);
+
+        // Check if there are results
+        if ($result->num_rows > 0) {
+
+            echo "<table border='1'>";
+            echo "<tr><th>Employee ID</th></tr>";
+
+            // Fetch and display each row
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr><td>" . $row["employee_id"] . "</td></tr>";
+            }
+
+            echo "</table>";
+        }
+    }
+    public function __destruct()
+    {
+        // Close the MySQL connection
+        $this->conn->close();
+    }
 }
+
+
+
+
 
 // creating new object 
 $querry = new Query();
@@ -109,3 +221,9 @@ $querry->querry1();
 $querry->querry2();
 // calling function querry3 
 $querry->querry3();
+// calling function queery 4 
+$querry->querry4();
+// calling function querry 5 
+$querry->querry5();
+$querry->querry6();
+$querry->query7();
