@@ -30,12 +30,11 @@ class Query
                     INNER JOIN employee_salary_table AS b     
                     ON a.employee_id = b.employee_id 
                     WHERE b.employee_salary > 50";
-               //result 
+            //result 
             $result = $this->conn->query($sql);
-        //    if result does not have any rows or columns 
+            //    if result does not have any rows or columns 
             if ($result && $result->num_rows > 0) {
                 $this->result = "<ul>";
-
                 // fetching result in an array
                 while ($row = $result->fetch_assoc()) {
                     $this->result .= "<li>" . htmlspecialchars($row["employee_first_name"]) . "</li>";
@@ -47,55 +46,66 @@ class Query
             }
         }
     }
-     public function querry2()
-     {
-        if (isset($_POST["secondquerry"])) {
-            $sql = "SELECT * FROM employee_details_table WHERE graduation_percentile > 70";
-            $result = $this->conn->query($sql);
 
+    // second task or querry two 
+    public function querry2()
+    {
+        // if second button is clicked on then 
+        if (isset($_POST["secondquerry"])) {
+            // sql querry 
+            $sql = "SELECT * FROM employee_details_table WHERE graduation_percentile > 70";
+            // fetching results 
+            $result = $this->conn->query($sql);
+            // if results are genuine 
             if ($result && $result->num_rows > 0) {
+                // show results 
                 $this->result = "<ul>";
                 while ($row = $result->fetch_assoc()) {
                     $this->result .= "<li>" . htmlspecialchars($row["employee_first_name"]) . " = " . htmlspecialchars($row["graduation_percentile"]) . "</li>";
                 }
                 $this->result .= "</ul>";
             } else {
+                // else does not fount result 
                 $this->result = "No employees found with graduation percentile > 70.";
             }
         }
-     }
-
-     public function querry3(){
-        if (isset($_POST["thirdquerry"])){
+    }
+    // function 3 for task 3 
+    public function querry3()
+    {
+        // if third button is clicked on then 
+        if (isset($_POST["thirdquerry"])) {
+            // sql querry 
             $sql = "SELECT a.employee_code_name, c.employee_first_name, c.graduation_percentile 
             FROM employee_code_table AS a 
             INNER JOIN employee_salary_table AS b ON a.employee_code = b.employee_code 
             INNER JOIN employee_details_table AS c ON c.employee_id = b.employee_id 
             WHERE c.graduation_percentile < 70";
-    
+            //  storin  result  value 
             $result = $this->conn->query($sql);
-
+            // if result is genuine 
             if ($result && $result->num_rows > 0) {
                 $this->result = "<ul>";
                 while ($row = $result->fetch_assoc()) {
                     $this->result .= "<li>" . htmlspecialchars($row["employee_first_name"]) . " = " . htmlspecialchars($row["graduation_percentile"]) . "</li>";
                 }
+                // showing result 
                 $this->result .= "</ul>";
             } else {
+                // else no result found or table is empty 
                 $this->result = "No employees found with graduation percentile > 70.";
             }
         }
-        }
-
-        public function querry4(){
-            
-        }
     }
 
+    public function querry4() {}
+}
+
+// creating new object 
 $querry = new Query();
-
-
+// calling function querry1 
 $querry->querry1();
-
+// calling function querry2 
 $querry->querry2();
+// calling function querry3 
 $querry->querry3();
