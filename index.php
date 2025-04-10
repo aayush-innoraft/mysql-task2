@@ -19,7 +19,8 @@ if (!isset($_SESSION['name'])) {
 }
 
 // User is logged in
-echo "Welcome, " . htmlspecialchars($_SESSION['name']);
+
+ $welcoming = "Welcome, " . htmlspecialchars($_SESSION['name']);
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +32,11 @@ echo "Welcome, " . htmlspecialchars($_SESSION['name']);
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <div class="welcom">
+        <?php 
+        echo  $welcoming;
+        ?>
+    </div>
   <div class="container">
     <form action="./index.php" method="POST">
       <div class="querry">
