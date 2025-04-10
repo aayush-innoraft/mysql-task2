@@ -58,7 +58,7 @@ if (!isset($_SESSION['name'])) {
         <button name="sixthquerry">Click to run query six</button>
       </div>
       <div class="querry">
-        <button name="onequerry">Click to run query seven</button>
+        <button name="seventhquerry">Click to run query seven</button>
       </div>
       <div class="querry">
         <button name="logout">Logout</button>

@@ -192,26 +192,28 @@ class Query
   // task 7 
   public function query7()
   {
-    // SQL query
-    $sql = "SELECT employee_id from employee_salary_table where employee_code IS NULL";
-
-    // Execute the query
-    $result = $this->conn->query($sql);
-
-    // Check if there are results
-    if ($result->num_rows > 0) {
-
-      echo "<table border='1'>";
-      echo "<tr><th>Employee ID</th></tr>";
-
-      // Fetch and display each row
-      while ($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row["employee_id"] . "</td></tr>";
+      if (isset($_POST["seventhquerry"])) {
+          // SQL query
+          $sql = "SELECT employee_id FROM employee_salary_table WHERE employee_code IS NULL";
+  
+          // Execute the query
+          $result = $this->conn->query($sql);
+  
+          if ($result && $result->num_rows > 0) {
+              echo "<table border='1'>";
+              echo "<tr><th>Employee ID</th></tr>";
+  
+              while ($row = $result->fetch_assoc()) {
+                  echo "<tr><td>" . htmlspecialchars($row["employee_id"]) . "</td></tr>";
+              }
+  
+              echo "</table>";
+          } else {
+              echo "No records found where employee_code is NULL.";
+          }
       }
-
-      echo "</table>";
-    }
   }
+  
   // destructor calling 
   public function __destruct()
   {
