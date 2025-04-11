@@ -9,6 +9,7 @@ class Query
   public $database = "employee";  // database name 
   public $result = ""; // store output here
 
+
   public function __construct()  // constructor 
   {
     $this->conn = mysqli_connect("localhost", "root", "aayush777", $this->database);
@@ -17,7 +18,7 @@ class Query
     }
   }
 
-  // querry one or task one 
+  // querry one for task one 
   public function querry1()
   {
     // if button one is clicked only then 
@@ -47,7 +48,7 @@ class Query
     }
   }
 
-  // second task or querry two 
+  // second task for querry two 
   public function querry2()
   {
     // if second button is clicked on then 
@@ -70,7 +71,7 @@ class Query
       }
     }
   }
-  // function 3 for task 3 
+  // querry  3 for task 3 
   public function querry3()
   {
     // if third button is clicked on then 
@@ -98,7 +99,7 @@ class Query
     }
   }
 
-  // task 4 or querry 4 
+  //  querry 4  for task 4
   public function querry4()
   {
     // if fourth button is pressed 
@@ -125,7 +126,7 @@ class Query
       }
     }
   }
-  // fifth task 
+  // querry fifth for fifth task 
   public function querry5()
   {
     // if fifth button is clicked 
@@ -156,7 +157,7 @@ class Query
       }
     }
   }
-  // sixth querry 
+  // sixth querry for sixth task
   public function querry6()
   {
     // only if button is clicked 
@@ -189,31 +190,31 @@ class Query
     }
   }
 
-  // task 7 
+  // querry 7 foe task 7
   public function query7()
   {
-      if (isset($_POST["seventhquerry"])) {
-          // SQL query
-          $sql = "SELECT employee_id FROM employee_salary_table WHERE employee_code IS NULL";
-  
-          // Execute the query
-          $result = $this->conn->query($sql);
-  
-          if ($result && $result->num_rows > 0) {
-              echo "<table border='1'>";
-              echo "<tr><th>Employee ID</th></tr>";
-  
-              while ($row = $result->fetch_assoc()) {
-                  echo "<tr><td>" . htmlspecialchars($row["employee_id"]) . "</td></tr>";
-              }
-  
-              echo "</table>";
-          } else {
-              echo "No records found where employee_code is NULL.";
-          }
+    if (isset($_POST["seventhquerry"])) {
+      // SQL query
+      $sql = "SELECT employee_id FROM employee_salary_table WHERE employee_code IS NULL";
+
+      // Execute the query
+      $result = $this->conn->query($sql);
+
+      if ($result && $result->num_rows > 0) {
+        echo "<table border='1'>";
+        echo "<tr><th>Employee ID</th></tr>";
+
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr><td>" . htmlspecialchars($row["employee_id"]) . "</td></tr>";
+        }
+
+        echo "</table>";
+      } else {
+        echo "No records found where employee_code is NULL.";
       }
+    }
   }
-  
+
   // destructor calling 
   public function __destruct()
   {
